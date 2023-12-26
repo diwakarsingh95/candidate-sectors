@@ -1,6 +1,7 @@
 # User Sectors
 
 > Frontend: React + Vite
+> 
 > Backend: Express + MongoDB
 
 ## How to run:
