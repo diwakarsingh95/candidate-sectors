@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import clsx from "clsx";
-import { REQUIRED_ERROR } from "../../constants";
+import { REQUIRED_ERROR } from "../../utils/constants";
 import SectorTreeSelect from "../SectorTreeSelect";
 import { getNameError } from "../../utils/helpers";
 import ErrorMessage from "../ErrorMessage";

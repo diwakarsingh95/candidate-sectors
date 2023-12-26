@@ -1,4 +1,4 @@
-import { NAME_INVALID_ERROR, NAME_REGEX, REQUIRED_ERROR } from "../constants";
+import { NAME_INVALID_ERROR, NAME_REGEX, REQUIRED_ERROR } from "./constants";
 
 export const getNameError = (value: string) => {
   return !value

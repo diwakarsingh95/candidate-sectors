@@ -1,3 +1,4 @@
+import { CSSProperties, useState } from "react";
 import TreeSelect from "rc-tree-select/es/TreeSelect";
 import {
   MdArrowRight,
@@ -8,8 +9,7 @@ import {
 import { IconType } from "react-icons";
 import clsx from "clsx";
 import treeData from "../../../data.json";
-import { CSSProperties, useState } from "react";
-import { SECTOR_MAX_ERROR, REQUIRED_ERROR } from "../../constants";
+import { SECTOR_MAX_ERROR, REQUIRED_ERROR } from "../../utils/constants";
 
 const getSvg = (
   Icon: IconType,
