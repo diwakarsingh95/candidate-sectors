@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import { NAME_REQUIRED_ERROR, SECTOR_REQUIRED_ERROR } from "../../constants";
-import SectorTreeSelect from "../SectorTreeSelect";
 import clsx from "clsx";
+import { REQUIRED_ERROR } from "../../constants";
+import SectorTreeSelect from "../SectorTreeSelect";
 import { getNameError } from "../../utils/helpers";
 import ErrorMessage from "../ErrorMessage";
 
@@ -30,7 +30,7 @@ const SectorForm = ({ onSubmit }: SectorFormProps) => {
 
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    if (!value) setName({ ...name, error: NAME_REQUIRED_ERROR });
+    if (!value) setName({ ...name, error: REQUIRED_ERROR });
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -47,7 +47,7 @@ const SectorForm = ({ onSubmit }: SectorFormProps) => {
       if (!sectors.value.length)
         setSectors((prevState) => ({
           ...prevState,
-          error: SECTOR_REQUIRED_ERROR,
+          error: REQUIRED_ERROR,
         }));
       setErrorAnimate(true);
       setTimeout(() => setErrorAnimate(false), 1500);
@@ -76,9 +76,10 @@ const SectorForm = ({ onSubmit }: SectorFormProps) => {
         </div>
         <input
           className={clsx(
-            "px-3 py-2 border rounded-lg focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500",
-            name.error &&
-              `border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500`
+            "px-3 py-2 border rounded-lg focus:outline-none focus:ring-1",
+            name.error
+              ? "border-red-500 text-red-600  focus:border-red-500 focus:ring-red-500"
+              : "focus:border-sky-500 focus:ring-sky-500"
           )}
           type="text"
           id="name"
@@ -125,7 +126,7 @@ const SectorForm = ({ onSubmit }: SectorFormProps) => {
           Agree to terms
         </label>
       </div>
-      <button className="self-start py-[6px] px-3 mt-1 border rounded-lg text-white bg-sky-600 hover:bg-sky-700 disabled:bg-gray-500">
+      <button className="self-start py-[6px] px-3 mt-1 border rounded-lg text-white bg-sky-600 hover:bg-sky-700 focus:outline-sky-900 disabled:bg-gray-500">
         Save
       </button>
     </form>

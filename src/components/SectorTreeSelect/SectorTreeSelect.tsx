@@ -6,10 +6,10 @@ import {
   MdClear,
 } from "react-icons/md";
 import { IconType } from "react-icons";
+import clsx from "clsx";
 import treeData from "../../../data.json";
 import { CSSProperties, useState } from "react";
-import { SECTOR_MAX_ERROR, SECTOR_REQUIRED_ERROR } from "../../constants";
-import clsx from "clsx";
+import { SECTOR_MAX_ERROR, REQUIRED_ERROR } from "../../constants";
 
 const getSvg = (
   Icon: IconType,
@@ -77,29 +77,26 @@ const SectorsTreeSelect = ({
   };
 
   const onDeselect = (value: string) => {
-    const error = selectedData.value.length <= 1 ? SECTOR_REQUIRED_ERROR : "";
+    const error = selectedData.value.length <= 1 ? REQUIRED_ERROR : "";
     setSelectedData((prevState) => ({
       value: prevState.value.filter((v) => v !== value),
       error,
     }));
   };
 
-  const onClear = () =>
-    setSelectedData({ error: SECTOR_REQUIRED_ERROR, value: [] });
+  const onClear = () => setSelectedData({ error: REQUIRED_ERROR, value: [] });
 
   const onDropdownVisibleChange = (open: boolean) => {
     setIsOpen(open);
     if (open || selectedData.error) return;
     else {
-      const error = !selectedData.value.length ? SECTOR_REQUIRED_ERROR : "";
+      const error = !selectedData.value.length ? REQUIRED_ERROR : "";
       setSelectedData((prevState) => ({
         ...prevState,
         error,
       }));
     }
   };
-
-  console.log(selectedData);
 
   return (
     <TreeSelect
@@ -113,6 +110,7 @@ const SectorsTreeSelect = ({
       treeData={treeData}
       placeholder={selectedData.value.length ? "" : "Choose Sectors..."}
       onClick={() => nameInputRef.current?.blur()}
+      onFocus={() => setIsOpen(true)}
       onDeselect={onDeselect}
       onSelect={onSelect}
       onClear={onClear}
@@ -121,7 +119,9 @@ const SectorsTreeSelect = ({
       treeDefaultExpandAll
       className={clsx(
         "border rounded-lg bg-white",
-        selectedData.error && "border-red-500"
+        isOpen && "border-2",
+        selectedData.error && "border-red-500",
+        isOpen && !selectedData.error && "border-sky-500"
       )}
       dropdownClassName="p-2 bg-gray-50 shadow-lg rounded-lg"
       showSearch={false}
