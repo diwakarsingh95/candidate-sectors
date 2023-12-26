@@ -14,7 +14,7 @@ Prerequisites: **Node** >= 20, **Yarn** >= 1.22
 - Create `.env` file and add following ennvironment variables:
   
   ```
-  PORT (default 8080 if not provided)
+  PORT (default: 8080)
   MONGO_URI
   ```
 - Run `yarn` to install dependencies.
