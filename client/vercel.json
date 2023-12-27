@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path(.*)",
+      "destination": "https://candidate-sectors.cyclic.app/:path"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
