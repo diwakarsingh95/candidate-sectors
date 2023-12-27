@@ -16,15 +16,15 @@ const Header = () => {
           </h1>
         </Link>
         <ul className="flex gap-4">
-          <li className="text-slate-700 hover:text-slate-900">
+          <li className="text-slate-700 hover:text-slate-900  text-sm sm:text-base">
             {id && pathname === "/" && (
               <Link to={`/candidate/${id}`} className="flex items-center gap-1">
-                Your Data <MdPerson className="h-6 w-6" />
+                Your Data <MdPerson className="h-4 w-4 sm:h-6 sm:w-6" />
               </Link>
             )}
             {pathname !== "/" && (
               <Link to="/" className="flex items-center gap-1">
-                Home <MdHome className="h-6 w-6" />
+                Home <MdHome className="h-4 w-4 sm:h-6 sm:w-6" />
               </Link>
             )}
           </li>
