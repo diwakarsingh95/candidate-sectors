@@ -102,7 +102,7 @@ const SectorsTreeSelect = ({
 
   return (
     <TreeSelect
-      open={true}
+      open={isOpen}
       id="sectors"
       style={{ width: "100%" }}
       transitionName="rc-tree-select-dropdown-slide-up"

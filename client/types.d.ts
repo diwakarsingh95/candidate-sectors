@@ -7,6 +7,7 @@ type Sector = {
 
 type SectorFormProps = {
   onSubmit: (data: CandidateFormData) => Promise<void>;
+  candidateData?: Candidate;
   isSubmitting: boolean;
 };
 
@@ -22,6 +23,10 @@ type SectorTreeSelectProps = {
     }>
   >;
   nameInputRef: React.MutableRefObject<HTMLInputElement | null>;
+};
+
+type CandidateViewProps = {
+  data: Candidate;
 };
 
 type Candidate = {

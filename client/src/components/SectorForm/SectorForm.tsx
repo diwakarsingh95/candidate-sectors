@@ -6,13 +6,26 @@ import SectorTreeSelect from "../SectorTreeSelect";
 import { getNameError } from "../../utils/helpers";
 import ErrorMessage from "../ErrorMessage";
 
-const SectorForm = ({ onSubmit, isSubmitting }: SectorFormProps) => {
-  const [name, setName] = useState({ value: "", error: "" });
-  const [sectors, setSectors] = useState({
-    value: [] as { code: string; id: string }[],
+const SectorForm = ({
+  candidateData,
+  onSubmit,
+  isSubmitting,
+}: SectorFormProps) => {
+  const [name, setName] = useState({
+    value: candidateData?.name || "",
     error: "",
   });
-  const [agreedToTerms, setAgreeToTerms] = useState<boolean | "error">(false);
+  const candidateSectors = candidateData?.sectors.map((sector) => ({
+    code: sector.value,
+    id: sector._id,
+  }));
+  const [sectors, setSectors] = useState({
+    value: candidateSectors || ([] as { code: string; id: string }[]),
+    error: "",
+  });
+  const [agreedToTerms, setAgreeToTerms] = useState<boolean | "error">(
+    candidateData?.agreedToTerms || false
+  );
   const [errorAnimate, setErrorAnimate] = useState(false);
   const nameInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -36,11 +49,12 @@ const SectorForm = ({ onSubmit, isSubmitting }: SectorFormProps) => {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.value && agreedToTerms === "error" && sectors.value.length) {
-      setErrorAnimate(true);
-      return;
-    }
-    if (!agreedToTerms || agreedToTerms === "error" || !sectors.value.length) {
+    if (
+      !name.value ||
+      !agreedToTerms ||
+      agreedToTerms === "error" ||
+      !sectors.value.length
+    ) {
       if (!agreedToTerms) {
         setAgreeToTerms("error");
       }
@@ -49,12 +63,14 @@ const SectorForm = ({ onSubmit, isSubmitting }: SectorFormProps) => {
           ...prevState,
           error: REQUIRED_ERROR,
         }));
+      if (!name.value) setName({ ...name, error: REQUIRED_ERROR });
       setErrorAnimate(true);
       setTimeout(() => setErrorAnimate(false), 1500);
       return;
     }
 
     onSubmit({
+      id: candidateData?._id,
       name: name.value,
       sectors: sectors.value.map((v) => v.id),
       agreedToTerms: !!agreedToTerms,
@@ -117,7 +133,7 @@ const SectorForm = ({ onSubmit, isSubmitting }: SectorFormProps) => {
         <label
           className={clsx(
             "leading-normal flex items-center cursor-pointer",
-            errorAnimate && "animate-bounce",
+            errorAnimate && agreedToTerms === "error" && "animate-bounce",
             agreedToTerms === "error" && "text-red-500 font-semibold"
           )}
         >

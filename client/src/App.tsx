@@ -1,14 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import ViewData from "./pages/ViewData";
+import CandidatePage from "./pages/CandidatePage";
+import Header from "./components/Header/Header";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/view" element={<ViewData />} />
-      </Routes>
+      <Header />
+      <main className="mt-16 sm:mt-20">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/candidate/:id" element={<CandidatePage />} />
+        </Routes>
+      </main>
     </BrowserRouter>
   );
 };
