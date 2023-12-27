@@ -36,7 +36,7 @@ const CandidatePage = () => {
   };
 
   return (
-    <div className="max-w-3xl container px-6 mx-auto">
+    <div className="max-w-3xl container px-6 pt-8 mx-auto">
       <div className="flex justify-between items-center mb-6">
         <h1 className="md:text-center text-2xl font-semibold">Your Data</h1>
         {!isLoading && data ? (

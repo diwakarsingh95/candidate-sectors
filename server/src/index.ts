@@ -33,4 +33,11 @@ mongoose
 app.use("/sector", sectorRouter);
 app.use("/candidate", candidateRouter);
 
+app.use("/", (req, res) => {
+  res.send("Hi! This is Candidate Sectors Backend.");
+});
+app.use("/*", (req, res) => {
+  res.status(400).send("Not Found.");
+});
+
 app.use(errorMiddleware);

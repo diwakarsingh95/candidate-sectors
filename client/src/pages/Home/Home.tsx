@@ -23,7 +23,7 @@ const Home = () => {
   };
 
   return (
-    <div className="max-w-3xl container px-6 mx-auto">
+    <div className="max-w-3xl container px-6 pt-8 mx-auto">
       <h1 className="md:text-center text-xl font-semibold mb-6">
         Please enter your name and pick the Sectors you are currently involved
         in.
