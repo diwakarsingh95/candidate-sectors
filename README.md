@@ -1,18 +1,20 @@
 # User Sectors
 
-Frontend: React + Vite
-Backend: Express + MongoDB
+> Frontend: React + Vite
+> 
+> Backend: Express + MongoDB
 
 ## How to run:
 
-Prerequisites: Node >= 20, Yarn >= 1.22
+Prerequisites: **Node** >= 20, **Yarn** >= 1.22
 
 ## Backend:
 
 - Go to **backend** directory.
 - Create `.env` file and add following ennvironment variables:
+  
   ```
-  PORT (default 8080 if not provided)
+  PORT (default: 8080)
   MONGO_URI
   ```
 - Run `yarn` to install dependencies.
