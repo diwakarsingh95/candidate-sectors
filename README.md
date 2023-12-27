@@ -18,6 +18,7 @@ Prerequisites: **Node** >= 20, **Yarn** >= 1.22
   MONGO_URI
   ```
 - Run `yarn` to install dependencies.
+- Run `yarn seed` to insert sample data for sectors in DB. You can find sample data file in the server/src directory (seedData.json).
 - Run `yarn dev` to start the development server.
 - To create build, run `yarn build`.
 - Run `yarn start` to start the server.
