@@ -10,6 +10,7 @@ import { IconType } from "react-icons";
 import clsx from "clsx";
 import { SECTOR_MAX_ERROR, REQUIRED_ERROR } from "../../utils/constants";
 import { useGetSectorsQuery } from "../../redux/api/apiSlice";
+import NoData from "./NoData";
 
 const getSvg = (
   Icon: IconType,
@@ -101,7 +102,7 @@ const SectorsTreeSelect = ({
 
   return (
     <TreeSelect
-      open={isOpen}
+      open={true}
       id="sectors"
       style={{ width: "100%" }}
       transitionName="rc-tree-select-dropdown-slide-up"
@@ -118,13 +119,14 @@ const SectorsTreeSelect = ({
       onDropdownVisibleChange={onDropdownVisibleChange}
       allowClear={{ clearIcon: MdClear }}
       treeDefaultExpandAll
+      notFoundContent={<NoData />}
       className={clsx(
         "border rounded-lg bg-white",
         isOpen && "border-2",
         selectedData.error && "border-red-500",
         isOpen && !selectedData.error && "border-sky-500"
       )}
-      dropdownClassName="p-2 bg-gray-50 shadow-lg rounded-lg"
+      dropdownClassName="p-2 bg-gray-50 shadow-lg rounded-lg min-h-6"
       showSearch={false}
       showTreeIcon={false}
       switcherIcon={switcherIcon}

@@ -71,7 +71,7 @@ body {
 }
 .rc-tree-select-dropdown {
   border: 1px solid #e5e7eb;
-  min-height: 100px;
+  min-height: 30px;
   position: absolute;
 }
 .rc-tree-select-dropdown-hidden,
