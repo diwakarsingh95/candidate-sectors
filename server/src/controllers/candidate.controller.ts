@@ -21,6 +21,7 @@ export const create = async (
       sectors,
       agreedToTerms,
     });
+    await newCandidate.populate("sectors")
     sendSuccessResponse({
       res,
       data: newCandidate,

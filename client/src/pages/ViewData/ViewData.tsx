@@ -4,8 +4,8 @@ import { MdEditSquare } from "react-icons/md";
 
 const ViewData = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const onSubmit = async () => {
-    console.log("handleSubmit...");
+  const onSubmit = async (data: CandidateFormData) => {
+    console.log("handleSubmit...", data);
   };
 
   return (
@@ -23,7 +23,7 @@ const ViewData = () => {
           </span>
         </button>
       </div>
-      <SectorForm onSubmit={onSubmit} />
+      <SectorForm onSubmit={onSubmit} isSubmitting={true} />
     </main>
   );
 };

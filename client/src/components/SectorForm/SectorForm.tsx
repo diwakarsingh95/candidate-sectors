@@ -1,17 +1,18 @@
 import React, { useRef, useState } from "react";
 import clsx from "clsx";
+import { CgSpinner } from "react-icons/cg";
 import { REQUIRED_ERROR } from "../../utils/constants";
 import SectorTreeSelect from "../SectorTreeSelect";
 import { getNameError } from "../../utils/helpers";
 import ErrorMessage from "../ErrorMessage";
 
-const SectorForm = ({ onSubmit }: SectorFormProps) => {
+const SectorForm = ({ onSubmit, isSubmitting }: SectorFormProps) => {
   const [name, setName] = useState({ value: "", error: "" });
   const [sectors, setSectors] = useState({
-    value: [] as string[],
+    value: [] as { code: string; id: string }[],
     error: "",
   });
-  const [agreeToTerms, setAgreeToTerms] = useState<boolean | "error">(false);
+  const [agreedToTerms, setAgreeToTerms] = useState<boolean | "error">(false);
   const [errorAnimate, setErrorAnimate] = useState(false);
   const nameInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -35,13 +36,12 @@ const SectorForm = ({ onSubmit }: SectorFormProps) => {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("handleSubmit...");
-    if (!name.value && agreeToTerms === "error" && sectors.value.length) {
+    if (!name.value && agreedToTerms === "error" && sectors.value.length) {
       setErrorAnimate(true);
       return;
     }
-    if (!agreeToTerms || !sectors.value.length) {
-      if (!agreeToTerms) {
+    if (!agreedToTerms || agreedToTerms === "error" || !sectors.value.length) {
+      if (!agreedToTerms) {
         setAgreeToTerms("error");
       }
       if (!sectors.value.length)
@@ -54,7 +54,11 @@ const SectorForm = ({ onSubmit }: SectorFormProps) => {
       return;
     }
 
-    onSubmit();
+    onSubmit({
+      name: name.value,
+      sectors: sectors.value.map((v) => v.id),
+      agreedToTerms: !!agreedToTerms,
+    });
   };
 
   return (
@@ -114,20 +118,26 @@ const SectorForm = ({ onSubmit }: SectorFormProps) => {
           className={clsx(
             "leading-normal flex items-center cursor-pointer",
             errorAnimate && "animate-bounce",
-            agreeToTerms === "error" && "text-red-500 font-semibold"
+            agreedToTerms === "error" && "text-red-500 font-semibold"
           )}
         >
           <input
             className="w-4 h-4 sm:text-xl mr-2 cursor-pointer"
             type="checkbox"
-            checked={!!agreeToTerms && typeof agreeToTerms !== "string"}
+            checked={!!agreedToTerms && typeof agreedToTerms !== "string"}
             onChange={handleChange}
           />
           Agree to terms
         </label>
       </div>
-      <button className="self-start py-[6px] px-3 mt-1 border rounded-lg text-white bg-sky-600 hover:bg-sky-700 focus:outline-sky-900 disabled:bg-gray-500">
-        Save
+      <button
+        disabled={isSubmitting}
+        className="self-start py-[6px] px-3 mt-1 border rounded-lg text-white bg-sky-600 hover:bg-sky-700 focus:outline-sky-900 disabled:bg-gray-500"
+      >
+        <div className="flex items-center gap-1">
+          Save
+          {isSubmitting && <CgSpinner className="animate-spin h-5 w-5" />}
+        </div>
       </button>
     </form>
   );

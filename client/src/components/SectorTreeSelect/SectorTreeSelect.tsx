@@ -8,8 +8,8 @@ import {
 } from "react-icons/md";
 import { IconType } from "react-icons";
 import clsx from "clsx";
-import treeData from "../../../data.json";
 import { SECTOR_MAX_ERROR, REQUIRED_ERROR } from "../../utils/constants";
+import { useGetSectorsQuery } from "../../redux/api/apiSlice";
 
 const getSvg = (
   Icon: IconType,
@@ -50,8 +50,9 @@ const SectorsTreeSelect = ({
   setSelectedData,
   nameInputRef,
 }: SectorTreeSelectProps) => {
+  const { data } = useGetSectorsQuery();
   const [isOpen, setIsOpen] = useState(false);
-  const onSelect = (value: string, data: SectorData) => {
+  const onSelect = (value: string, data: Sector) => {
     if (data.children && data.children.length) return;
 
     if (selectedData.value.length >= 5) {
@@ -71,7 +72,7 @@ const SectorsTreeSelect = ({
     }
 
     setSelectedData((prevState) => ({
-      value: [...prevState.value, value],
+      value: [...prevState.value, { code: value, id: data._id }],
       error: "",
     }));
   };
@@ -79,7 +80,7 @@ const SectorsTreeSelect = ({
   const onDeselect = (value: string) => {
     const error = selectedData.value.length <= 1 ? REQUIRED_ERROR : "";
     setSelectedData((prevState) => ({
-      value: prevState.value.filter((v) => v !== value),
+      value: prevState.value.filter((v) => v.code !== value),
       error,
     }));
   };
@@ -106,8 +107,8 @@ const SectorsTreeSelect = ({
       transitionName="rc-tree-select-dropdown-slide-up"
       choiceTransitionName="rc-tree-select-selection__choice-zoom"
       multiple
-      value={selectedData.value}
-      treeData={treeData}
+      value={selectedData.value.map((v) => v.code)}
+      treeData={data ? data.data : []}
       placeholder={selectedData.value.length ? "" : "Choose Sectors..."}
       onClick={() => nameInputRef.current?.blur()}
       onFocus={() => setIsOpen(true)}
@@ -132,6 +133,7 @@ const SectorsTreeSelect = ({
       dropdownMatchSelectWidth={true}
       removeIcon={removeIcon}
       aria-invalid={!!selectedData.error}
+      disabled={!data}
     />
   );
 };
