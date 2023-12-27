@@ -2,11 +2,21 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import errorMiddleware from "./middlewares/error.middleware";
 
-const PORT = process.env.PORT || 8080;
-const MONGO_URI = process.env.MONGO_URI as string;
+// Routers
+import sectorRouter from "./routes/sector.route";
+import candidateRouter from "./routes/candidate.route";
+import { MONGO_URI, PORT } from "./utils/constants";
 
 const app = express();
+
+app.use(
+  cors({
+    methods: ["GET", "POST"],
+  })
+);
+app.use(express.json());
 
 mongoose
   .connect(MONGO_URI)
@@ -19,9 +29,8 @@ mongoose
     console.error(error);
   });
 
-app.use(cors());
-app.use(express.json());
+// Routes
+app.use("/sector", sectorRouter);
+app.use("/candidate", candidateRouter);
 
-app.get("/", (req, res) => {
-  res.send("User sectors server.");
-});
+app.use(errorMiddleware);
