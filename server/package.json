@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/diwakarsingh95/user-sectors.git"
+    "url": "git+https://github.com/diwakarsingh95/candidate-sectors.git"
   },
   "author": "Diwakar",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/diwakarsingh95/user-sectors/issues"
+    "url": "https://github.com/diwakarsingh95/candidate-sectors.git/issues"
   },
-  "homepage": "https://github.com/diwakarsingh95/user-sectors#readme",
+  "homepage": "https://github.com/diwakarsingh95/candidate-sectors.git#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
