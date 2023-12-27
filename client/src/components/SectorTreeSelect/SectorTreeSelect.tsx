@@ -102,7 +102,7 @@ const SectorsTreeSelect = ({
 
   return (
     <TreeSelect
-      open={isOpen}
+      open={true}
       id="sectors"
       style={{ width: "100%" }}
       transitionName="rc-tree-select-dropdown-slide-up"
@@ -126,11 +126,11 @@ const SectorsTreeSelect = ({
         selectedData.error && "border-red-500",
         isOpen && !selectedData.error && "border-sky-500"
       )}
-      dropdownClassName="p-2 bg-gray-50 shadow-lg rounded-lg min-h-6"
+      dropdownClassName="p-2 bg-gray-50 shadow-lg rounded-lg"
       showSearch={false}
       showTreeIcon={false}
       switcherIcon={switcherIcon}
-      listHeight={400}
+      listHeight={300}
       maxTagTextLength={25}
       dropdownMatchSelectWidth={true}
       removeIcon={removeIcon}
