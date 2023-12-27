@@ -1,4 +1,4 @@
-# User Sectors
+# Candidate Sectors
 
 > Frontend: React + Vite
 > 
