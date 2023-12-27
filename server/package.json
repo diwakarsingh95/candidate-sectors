@@ -1,5 +1,5 @@
 {
-  "name": "user-sectors-server",
+  "name": "candidate-sectors-backend",
   "version": "1.0.0",
   "description": "User sectors backend server",
   "main": "index.js",
