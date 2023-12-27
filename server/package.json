@@ -1,7 +1,7 @@
 {
   "name": "candidate-sectors-backend",
   "version": "1.0.0",
-  "description": "User sectors backend server",
+  "description": "Candidate sectors backend server",
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production rimraf ./dist && tsc",
