@@ -7,7 +7,11 @@ export default function errorMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  console.error(responseError);
-  const { status, message, error } = responseError;
+  console.error("responseError", responseError);
+  const {
+    status = 500,
+    message = "Something went wrong.",
+    error,
+  } = responseError;
   res.status(status).json({ message, error });
 }
