@@ -13,9 +13,6 @@ body {
 .rc-tree-select-selector {
   padding: 8px;
 }
-.rc-tree-select-tree-list-holder-inner {
-  gap: 8px;
-}
 .rc-tree-select {
   display: inline-block;
   width: 100px;
