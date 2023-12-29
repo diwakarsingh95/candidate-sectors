@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import SectorModel from "../models/sector.model";
 import { sendSuccessResponse } from "../utils/responseHandler";
-import { SectorMappedDocument, mapSectorData } from "../utils/helpers";
+import {
+  SectorMappedDocument,
+  getMappedSectors,
+  getSortedSectors,
+} from "../utils/helpers";
 
 export const getAllSectors = async (
   req: Request,
@@ -28,9 +32,10 @@ export const getAllSectors = async (
     ]);
     const mappedSectors = sectors.map((sector) => ({
       ...sector,
-      children: mapSectorData("", sector?.children),
+      children: getSortedSectors(getMappedSectors("", sector?.children)),
     }));
-    sendSuccessResponse({ res, data: mappedSectors });
+    const sortedSectors = getSortedSectors(mappedSectors);
+    sendSuccessResponse({ res, data: sortedSectors });
   } catch (error) {
     next(error);
   }
