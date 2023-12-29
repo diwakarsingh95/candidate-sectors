@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { isObjectIdOrHexString } from "mongoose";
 import { errorHandler } from "../utils/errorHandler";
 import CandidateModel from "../models/candidate.model";
 import { sendSuccessResponse } from "../utils/responseHandler";
@@ -32,6 +33,23 @@ export const createCandidate = async (
   }
 };
 
+export const getAllCandidates = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const candidates = await CandidateModel.find().populate("sectors");
+    sendSuccessResponse({
+      res,
+      data: candidates,
+      message: "Success",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getCandidate = async (
   req: Request,
   res: Response,
@@ -40,12 +58,14 @@ export const getCandidate = async (
   try {
     const { id } = req.params;
 
-    if (!id)
+    if (!id || !isObjectIdOrHexString(id))
       return next(
-        errorHandler({ statusCode: 400, message: "Missing required fields." })
+        errorHandler({ statusCode: 400, message: "Invalid candidate ID." })
       );
 
-    const candidate = await CandidateModel.findById(id).populate("sectors");
+    const candidate = await CandidateModel.findById(id)
+      .populate("sectors")
+      .orFail(new Error("No candidate found!"));
     sendSuccessResponse({
       res,
       data: candidate,
@@ -64,22 +84,17 @@ export const updateCandidate = async (
   try {
     const { id, name, sectors, agreedToTerms } = req.body;
 
-    if (
-      !id ||
-      !name ||
-      !sectors ||
-      !agreedToTerms ||
-      (sectors && !sectors.length)
-    )
+    if (!id || !isObjectIdOrHexString(id))
+      return next(
+        errorHandler({ statusCode: 400, message: "Invalid candidate ID." })
+      );
+
+    if (!name || !sectors || !agreedToTerms || (sectors && !sectors.length))
       return next(
         errorHandler({ statusCode: 400, message: "Missing required fields." })
       );
 
-    const candidate = await CandidateModel.findById(id);
-    if (!candidate)
-      return next(
-        errorHandler({ statusCode: 404, message: "No candidate found!" })
-      );
+    await CandidateModel.findById(id).orFail(new Error("No candidate found!"));
 
     const udpatedCandidate = await CandidateModel.findByIdAndUpdate(
       id,
